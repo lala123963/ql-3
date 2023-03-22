@@ -8,7 +8,6 @@ new Env('热度星客');
 抓包请求: Authori-zation: Bearer XXXXX
 环境变量 rdxkck = Bearer XXXXX
 仅支持企业微信机器人推送
-测试
 """
 
 import requests
@@ -73,6 +72,5 @@ if __name__ == '__main__':
         try:
             sign(ck)
         except KeyError:
-            print("请检查ck是否正确: " + ck)
+            print("请检查ck是否正确")
             print()
-
