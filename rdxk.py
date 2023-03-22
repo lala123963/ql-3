@@ -3,6 +3,7 @@ cron: 0 9 * * *
 new Env('热度星客');
 
 热度星客签到脚本
+一周2块钱的样子，一个月8块钱。提现需要绑卡实名认证。
 地址：https://m.reduxingke.com/down/register.html?spread=279954&incode=XK28995483
 抓包域名: m.reduxingke.com
 抓包请求: Authori-zation: Bearer XXXXX
