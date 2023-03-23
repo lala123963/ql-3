@@ -19,7 +19,7 @@ def sign(id, sjh):
     }
     data = 'drawType=B&bizFrom=225&activityId=TTLXJ20210330'
     infourl = 'https://epay.10010.com/ci-mcss-party-front/v1/ttlxj/unifyDrawNew'
-    info = requests.post(infourl, headers=headers, data=data).json()
+    info = requests.post(infourl, headers=headers, data=data, verify=False).json()
     print(info['data']['returnMsg'])
 
 
