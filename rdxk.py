@@ -8,6 +8,7 @@ new Env('热度星客');
 抓包域名: m.reduxingke.com
 抓包请求头里面: Authori-zation: Bearer XXXXX
 环境变量 rdxkck = Authori-zation抓的XXXXX#提现交易密码(可选)  #分割两个值  Authori-zation不要Bearer
+多账号新建变量或者用 & 分开
 例如：rdxkck = dca86255101af382#123456     填交易密码满2元自动提现 默认提现到银行卡
      rdxkck = dca86255101af382            没有交易密码只签到
 请求头User-Agent可以换成自己的
