@@ -24,33 +24,16 @@ def sign(authorization, pwd):
         "authori-zation": "Bearer " + authorization,
         "User-Agent": "Mozilla/5.0 (Linux; Android 11;Redmi Note 8 Pro Build/RP1A.200720.011;wv)AppleWebKit/537.36(KHTML./like Gecko) Version/4.0 Chrome/86.0.4240.99 XWEB/4435 MMWEBSDK/20230202 Mobile Safari/537.36 MMWEBID/9516MicroMessenger/8.0.33.2320(0x28002151) WeChat/arm64 Weixin NetType/4G Language/zh_CN ABI/arm64 MiniProgramEnv/android",
     }
-    txdata = {
-        "brokerage": "1.9",
-        "pwd": pwd,
-        "extract_type": "bank"
-    }
     url = 'https://m.reduxingke.com/api/usersign/sign'
     response = requests.post(url, headers=headers).json()
 
     infourl = 'https://m.reduxingke.com/api/userinfo'
     info = requests.get(infourl, headers=headers).json()
 
-    msg = "[{}]：登录成功\n[签到]：{}\n[余额]：{}".format(info['data']['nickname'], response['msg'],
-                                                       info['data']['brokerage_price'])
-    print(msg)
 
-    ts_msg = "热度星客签到\n" + msg
 
-    QYWX_KEY = get_environ("QYWX_KEY")
-    webhook = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=" + QYWX_KEY
-    headers = {"Content-Type": "text/plain"}
-    data = {
-        "msgtype": "text",
-        "text": {
-            "content": ts_msg
-        }
 
-    }
+    txmsg = ''
     txje = float(info['data']['brokerage_price'])
     if txje > 2:
         if pwd != 0:
@@ -66,9 +49,27 @@ def sign(authorization, pwd):
             txurl = 'https://m.reduxingke.com/api/user/applyExtract'
             txinfo = requests.post(txurl, headers=txheaders, json=txdata).json()
             txmsg = "[提现]：{}".format(txinfo['msg'])
-            print(txmsg)
+
+
         else:
             print("")
+
+    msg = "[{}]：登录成功\n[签到]：{}\n[余额]：{}".format(info['data']['nickname'], response['msg'], info['data']['brokerage_price'])
+    print(msg)
+    print(txmsg)
+    ts_msg = "热度星客签到\n" + msg + '\n' + txmsg
+
+
+    QYWX_KEY = get_environ("QYWX_KEY")
+    webhook = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=" + QYWX_KEY
+    headers = {"Content-Type": "text/plain"}
+    data = {
+        "msgtype": "text",
+        "text": {
+            "content": ts_msg
+        }
+
+    }
 
     if QYWX_KEY != "":
         r = requests.post(url=webhook, headers=headers, json=data).json()
