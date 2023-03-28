@@ -3,7 +3,6 @@ cron: 0 9 * * *
 new Env('热度星客');
 
 热度星客签到+自动提现脚本
-一周2块钱的样子，一个月8块钱。提现需要绑卡实名认证。
 地址：https://m.reduxingke.com/down/register.html?spread=279954&incode=XK28995483
 抓包域名: m.reduxingke.com
 抓包请求头里面: Authori-zation: Bearer XXXXX
@@ -31,10 +30,7 @@ def sign(authorization, pwd):
     infourl = 'https://m.reduxingke.com/api/userinfo'
     info = requests.get(infourl, headers=headers).json()
 
-
-
-
-    txmsg = ''
+    txmsg = "[提现]：提现佣金不足"
     txje = float(info['data']['brokerage_price'])
     if txje > 2:
         if pwd != 0:
@@ -50,16 +46,14 @@ def sign(authorization, pwd):
             txurl = 'https://m.reduxingke.com/api/user/applyExtract'
             txinfo = requests.post(txurl, headers=txheaders, json=txdata).json()
             txmsg = "[提现]：{}".format(txinfo['msg'])
-
-
         else:
-            print("")
+            print("[提现]：提现佣金不足")
 
-    msg = "[{}]：登录成功\n[签到]：{}\n[余额]：{}".format(info['data']['nickname'], response['msg'], info['data']['brokerage_price'])
+    msg = "[账号]：{}\n[用户]：{}\n[签到]：{}\n[余额]：{}".format(a, info['data']['nickname'], response['msg'],
+                                                       info['data']['brokerage_price'])
     print(msg)
     print(txmsg)
     ts_msg = "热度星客签到\n" + msg + '\n' + txmsg
-
 
     QYWX_KEY = get_environ("QYWX_KEY")
     webhook = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=" + QYWX_KEY
@@ -105,6 +99,7 @@ if __name__ == '__main__':
         for i in c:
             d = i.split('#')
         try:
+            a += 1
             if len(d) == 2:
                 sign(d[0], d[1])
             elif len(d) == 1:
