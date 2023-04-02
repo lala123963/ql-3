@@ -54,13 +54,13 @@ def sign(ck):
     r = requests.post(url, headers=headers, json=data).json()
     xx = "[账号{}]\n[签到]{}\n".format(a, r['message'])
     print(xx)
-    msg += "[账号{}]\n[签到]{}\n".format(a, r['message'])
+    msg = msg + "[账号{}]\n[签到]{}\n".format(a, r['message'])
 
 
 if __name__ == '__main__':
     token = get_environ("gladosck")
     cks = token.split("&")
-    print("检测到{}个ck记录\n开始统一快乐星球签到".format(len(cks)))
+    print("检测到{}个ck记录\n开始glados签到".format(len(cks)))
     print()
     a = 0
     for ck in cks:
