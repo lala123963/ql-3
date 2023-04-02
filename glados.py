@@ -9,6 +9,8 @@ glados签到(免费梯子)
 多账号新建变量或者用 & 分开
 
 """
+import time
+
 import requests
 from os import environ, system, path
 
@@ -41,33 +43,37 @@ def get_environ(key, default="", output=True):
     return environ.get(key) if environ.get(key) else no_read()
 
 
-def sign(ck):
-    url = "https://glados.rocks/api/user/checkin"
-    headers = {
-        'Cookie': ck,
-        'sec-ch-ua': '"Microsoft Edge";v="111", "Not(A:Brand";v="8", "Chromium";v="111"',
-    }
+class Glados():
+    def __init__(self, ck):
+        self.msg = ''
+        self.ck = ck
 
-    data = {
-        "token": "glados.network"
-    }
-    r = requests.post(url, headers=headers, json=data).json()
-    xx = "[账号{}]\n[签到]{}\n".format(a, r['message'])
-    print(xx)
-    msg += xx
+    def sign(self):
+        time.sleep(1)
+        url = "https://glados.rocks/api/user/checkin"
+        headers = {
+            'Cookie': self.ck,
+            'sec-ch-ua': '"Microsoft Edge";v="111", "Not(A:Brand";v="8", "Chromium";v="111"',
+        }
+
+        data = {
+            "token": "glados.network"
+        }
+        r = requests.post(url, headers=headers, json=data).json()
+        xx = "[账号]{}\n[签到]{}\n\n".format(a, r['message'])
+        self.msg += xx
+        return self.msg
 
 
 if __name__ == '__main__':
-    token = get_environ("gladosck")
+    token = get_environ("gladosck") if environ.get("gladosck") else refresh_token
+    msg = ''
     cks = token.split("&")
-    print("检测到{}个ck记录\n开始glados签到".format(len(cks)))
+    print("检测到{}个ck记录".format(len(cks)))
     print()
     a = 0
     for ck in cks:
-        c = ck.split('&')
-        msg = ''
-        for i in c:
-            a += 1
-            sign(i)
-            print()
-    send(msg)
+        a += 1
+        run = Glados(ck)
+        msg += run.sign()
+    send("glados签到通知", msg)
