@@ -4,7 +4,7 @@ new Env('glados签到');
 测试
 glados签到(免费梯子)
 抓包域名: https://glados.rocks/api/user/checkin
-抓包请求头里面: cookie 包含 _ga,_gid..等复制cooker填入变量
+抓包请求头里面: cookie 包含 _ga,_gid..等复制cookie填入变量
 环境变量 gladosck = xxxxx
 多账号新建变量或者用 & 分开
 
