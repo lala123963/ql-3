@@ -65,6 +65,7 @@ if __name__ == '__main__':
     a = 0
     for ck in cks:
         c = ck.split('&')
+        msg = ''
         for i in c:
             a += 1
             sign(i)
