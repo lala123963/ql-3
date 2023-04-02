@@ -54,7 +54,7 @@ def sign(ck):
     r = requests.post(url, headers=headers, json=data).json()
     xx = "[账号{}]\n[签到]{}\n".format(a, r['message'])
     print(xx)
-    msg = msg + "[账号{}]\n[签到]{}\n".format(a, r['message'])
+    msg += xx
 
 
 if __name__ == '__main__':
@@ -65,7 +65,6 @@ if __name__ == '__main__':
     a = 0
     for ck in cks:
         c = ck.split('&')
-        msg = "glados通知\n"
         for i in c:
             a += 1
             sign(i)
