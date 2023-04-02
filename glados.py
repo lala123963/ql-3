@@ -14,7 +14,6 @@ from os import environ, system, path
 
 
 def load_send():
-
     global send, mg
     cur_path = path.abspath(path.dirname(__file__))
     if path.exists(cur_path + "/notify.py"):
@@ -30,6 +29,16 @@ def load_send():
 
 
 load_send()
+
+
+def get_environ(key, default="", output=True):
+    def no_read():
+        if output:
+            if key == "rdxkck":
+                print(f"未填写环境变量 {key} 请添加")
+        return default
+
+    return environ.get(key) if environ.get(key) else no_read()
 
 
 def sign(ck):
