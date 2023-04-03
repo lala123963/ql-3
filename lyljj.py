@@ -70,7 +70,7 @@ class Ltljj():
             phone = ljj['userId']
         hide = phone.replace(phone[3:7], '****')
         if r['data']['returnMsg'] == 'ok':
-            xx = f"[账号]：{hide}\n[签到]：恭喜您获得：{r['data']['amont']}话费红包。\n[余额]：{ljjye}\n\n"
+            xx = f"[账号]：{hide}\n[签到]：恭喜您获得：{r['data']['amount']}话费红包。\n[余额]：{ljjye}\n\n"
             self.msg += xx
             return self.msg
         else:
