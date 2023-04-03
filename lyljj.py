@@ -49,6 +49,7 @@ class Ltljj():
     def sign(self):
         time.sleep(1)
         url = "https://epay.10010.com/ci-mcss-party-front/v1/ttlxj/unifyDrawNew"
+        url2 = 'https://epay.10010.com/ci-mcss-party-front/v1/template/getUserInfo'
         hck = str({"mobile": "", "sessionId": self.ck, "tokenId": self.ck, "userId": ""})
         headers = {
             "Host": "epay.10010.com",
@@ -61,12 +62,15 @@ class Ltljj():
         data = 'drawType=B&bizFrom=225&activityId=TTLXJ20210330'
 
         r = requests.post(url, headers=headers, data=data).json()
+        r2 = requests.post(url2, headers=headers, data=data).json()
+        phone = r2['data']['mobileNo']
+        hide = phone.replace(phone[3:7], '****')
         if r['data']['returnMsg'] == 'ok':
-            xx = f"[账号]：{a}\n[签到]：恭喜您获得：{r['data']['amont']}话费红包。\n\n"
+            xx = f"[账号]：{hide}\n[签到]：恭喜您获得：{r['data']['amont']}话费红包。\n\n"
             self.msg += xx
             return self.msg
         else:
-            xx = f"[账号]：{a}\n[签到]：{r['data']['returnMsg']}\n\n"
+            xx = f"[账号]：{hide}\n[签到]：{r['data']['returnMsg']}\n\n"
             self.msg += xx
             return self.msg
 
@@ -77,10 +81,7 @@ if __name__ == '__main__':
     msg = ''
     cks = token.split("&")
     print("检测到{}个ck记录".format(len(cks)))
-    print()
-    a = 0
     for ck in cks:
-        a += 1
         run = Ltljj(ck)
         msg += run.sign()
     send("联通立减金签到通知", msg)
