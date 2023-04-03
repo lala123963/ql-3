@@ -34,7 +34,7 @@ load_send()
 def get_environ(key, default="", output=True):
     def no_read():
         if output:
-            if key == "rdxkck":
+            if key == "gladosck":
                 print(f"未填写环境变量 {key} 请添加")
         return default
 
