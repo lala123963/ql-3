@@ -49,7 +49,7 @@ class Ltljj():
     def sign(self):
         time.sleep(1)
         url = "https://epay.10010.com/ci-mcss-party-front/v1/ttlxj/unifyDrawNew"
-        url2 = 'https://epay.10010.com/ci-mcss-party-front/v1/template/getUserInfo'
+        url2 = "https://epay.10010.com/ci-mcss-party-front/v1/ttlxj/queryAvailable"
         hck = str({"mobile": "", "sessionId": self.ck, "tokenId": self.ck, "userId": ""})
         headers = {
             "Host": "epay.10010.com",
@@ -63,17 +63,20 @@ class Ltljj():
 
         r = requests.post(url, headers=headers, data=data).json()
         r2 = requests.post(url2, headers=headers, data=data).json()
-        phone = r2['data']['mobileNo']
+        ljjlist = r2['data']['prizeList']
+        ljjye = 0
+        for ljj in ljjlist:
+            ljjye += float(ljj['amount'])
+            phone = ljj['userId']
         hide = phone.replace(phone[3:7], '****')
         if r['data']['returnMsg'] == 'ok':
-            xx = f"[账号]：{hide}\n[签到]：恭喜您获得：{r['data']['amont']}话费红包。\n\n"
+            xx = f"[账号]：{hide}\n[签到]：恭喜您获得：{r['data']['amont']}话费红包。\n[余额]：{ljjye}\n\n"
             self.msg += xx
             return self.msg
         else:
-            xx = f"[账号]：{hide}\n[签到]：{r['data']['returnMsg']}\n\n"
+            xx = f"[账号]：{hide}\n[签到]：{r['data']['returnMsg']}\n[余额]：{ljjye}\n\n"
             self.msg += xx
             return self.msg
-
 
 
 if __name__ == '__main__':
