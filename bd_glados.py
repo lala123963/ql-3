@@ -25,10 +25,10 @@ def load_send():
             print("加载通知服务成功！")
         except:
             send = False
-            print('''加载通知服务失败~\n请使用以下命令拉库\nql repo https://github.com/Bidepanlong/ql.git "bd_" "README" "SendNotify"''')
+            print("加载通知服务失败~")
     else:
         send = False
-        print('''加载通知服务失败~\n请使用以下命令拉库\nql repo https://github.com/Bidepanlong/ql.git "bd_" "README" "SendNotify"''')
+        print("加载通知服务失败~")
 
 
 load_send()
@@ -99,3 +99,5 @@ if __name__ == '__main__':
             msg += f"[账号]{a}\n[签到]异常：{e}\n\n"
     if send:
         send("glados签到通知", msg)
+    else:
+        print(f"glados签到通知\n{msg}")
