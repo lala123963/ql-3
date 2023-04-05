@@ -63,30 +63,35 @@ class Ltljj():
         data = 'drawType=B&bizFrom=225&activityId=TTLXJ20210330'
 
         r = requests.post(url, headers=headers, data=data).json()
+        time.sleep(1)
         r2 = requests.post(url2, headers=headers, data=data).json()
-
-        if r['data']['returnMsg'] == 'ok':
-            ljjlist = r2['data']['prizeList']
-            ljjye = 0
-            for ljj in ljjlist:
-                ljjye += float(ljj['amount'])
-            xx = f"[账号]：{ljj['userId'].replace(ljj['userId'][3:7], '****')}\n[签到]：恭喜您获得：{r['data']['amount']}话费红包。\n[余额]：{ljjye}\n\n"
-            self.msg += xx
-            return self.msg
-        elif r['data']['returnMsg'] == '获取用户信息失败':
-            xx = f"{r['data']['returnMsg']}, 请检查ck是否有效。{self.ck}\n"
-            self.msg += xx
-            return self.msg
-        elif r['data']['returnMsg'] == '已达到活动日最大次数':
-            ljjlist = r2['data']['prizeList']
-            ljjye = 0
-            for ljj in ljjlist:
-                ljjye += float(ljj['amount'])
-            xx = f"[账号]：{ljj['userId'].replace(ljj['userId'][3:7], '****')}\n[签到]：{r['data']['returnMsg']}\n[余额]：{ljjye}\n\n"
-            self.msg += xx
-            return self.msg
-        else:
-            xx = '未知错误\n'
+        try:
+            if r['data']['returnMsg'] == 'ok':
+                ljjlist = r2['data']['prizeList']
+                ljjye = 0
+                for ljj in ljjlist:
+                    ljjye += float(ljj['amount'])
+                xx = f"[账号]：{ljj['userId'].replace(ljj['userId'][3:7], '****')}\n[签到]：恭喜您获得：{r['data']['amount']}话费红包。\n[余额]：{ljjye}\n\n"
+                self.msg += xx
+                return self.msg
+            elif r['data']['returnMsg'] == '获取用户信息失败':
+                xx = f"{r['data']['returnMsg']}, 请检查ck是否有效。{self.ck}\n\n"
+                self.msg += xx
+                return self.msg
+            elif r['data']['returnMsg'] == '已达到活动日最大次数':
+                ljjlist = r2['data']['prizeList']
+                ljjye = 0
+                for ljj in ljjlist:
+                    ljjye += float(ljj['amount'])
+                xx = f"[账号]：{ljj['userId'].replace(ljj['userId'][3:7], '****')}\n[签到]：{r['data']['returnMsg']}\n[余额]：{ljjye}\n\n"
+                self.msg += xx
+                return self.msg
+            else:
+                xx = '未知错误\n'
+                self.msg += xx
+                return self.msg
+        except:
+            xx = "请检查ck是否有效或者更换尝试！！！"
             self.msg += xx
             return self.msg
 
