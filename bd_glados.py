@@ -25,7 +25,7 @@ def load_send():
             print("加载通知服务成功！")
         except:
             send = False
-            print("加载通知服务失败~")
+            print('''加载通知服务失败~\n请使用以下命令拉库\nql repo https://github.com/Bidepanlong/ql.git "bd_" "README" "SendNotify"''')
     else:
         send = False
         print("加载通知服务失败~")
