@@ -92,11 +92,7 @@ if __name__ == '__main__':
     for ck in cks:
         a += 1
         run = Glados(ck)
-        try:
-            msg += run.get_sign_msg()
-        except Exception as e:
-            print(f"第{a}个ck签到异常：{e}")
-            msg += f"[账号]{a}\n[签到]异常：{e}\n\n"
+        msg += run.get_sign_msg()
     if send:
         send("glados签到通知", msg)
     else:
