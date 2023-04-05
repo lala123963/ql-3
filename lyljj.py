@@ -47,6 +47,7 @@ class Ltljj():
         self.ck = ck
 
     def sign(self):
+        global ljj
         time.sleep(1)
         url = "https://epay.10010.com/ci-mcss-party-front/v1/ttlxj/unifyDrawNew"
         url2 = "https://epay.10010.com/ci-mcss-party-front/v1/ttlxj/queryAvailable"
@@ -63,18 +64,29 @@ class Ltljj():
 
         r = requests.post(url, headers=headers, data=data).json()
         r2 = requests.post(url2, headers=headers, data=data).json()
-        ljjlist = r2['data']['prizeList']
-        ljjye = 0
-        for ljj in ljjlist:
-            ljjye += float(ljj['amount'])
-            phone = ljj['userId']
-        hide = phone.replace(phone[3:7], '****')
+
         if r['data']['returnMsg'] == 'ok':
-            xx = f"[账号]：{hide}\n[签到]：恭喜您获得：{r['data']['amount']}话费红包。\n[余额]：{ljjye}\n\n"
+            ljjlist = r2['data']['prizeList']
+            ljjye = 0
+            for ljj in ljjlist:
+                ljjye += float(ljj['amount'])
+            xx = f"[账号]：{ljj['userId'].replace(ljj['userId'][3:7], '****')}\n[签到]：恭喜您获得：{r['data']['amount']}话费红包。\n[余额]：{ljjye}\n\n"
+            self.msg += xx
+            return self.msg
+        elif r['data']['returnMsg'] == '获取用户信息失败':
+            xx = f"{r['data']['returnMsg']}, 请检查ck是否有效。{self.ck}\n"
+            self.msg += xx
+            return self.msg
+        elif r['data']['returnMsg'] == '已达到活动日最大次数':
+            ljjlist = r2['data']['prizeList']
+            ljjye = 0
+            for ljj in ljjlist:
+                ljjye += float(ljj['amount'])
+            xx = f"[账号]：{ljj['userId'].replace(ljj['userId'][3:7], '****')}\n[签到]：{r['data']['returnMsg']}\n[余额]：{ljjye}\n\n"
             self.msg += xx
             return self.msg
         else:
-            xx = f"[账号]：{hide}\n[签到]：{r['data']['returnMsg']}\n[余额]：{ljjye}\n\n"
+            xx = '未知错误\n'
             self.msg += xx
             return self.msg
 
