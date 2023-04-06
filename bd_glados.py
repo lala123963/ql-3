@@ -66,15 +66,15 @@ class Glados():
         r = requests.post(url, headers=headers, json=data)
         if r.status_code == 200:
             if r.json()['message'] == '没有权限':
-                xx = f"[账号]{a}\n[签到]{r.json()['message']}，ck可能无效:{self.ck}\n\n"
+                xx = f"[账号]：{a}\n[签到]：{r.json()['message']}，ck可能无效:{self.ck}\n\n"
                 self.msg += xx
                 return self.msg
             else:
-                xx = f"[账号]{a}\n[签到]{r.json()['message']}\n\n"
+                xx = f"[账号]：{a}\n[签到]：{r.json()['message']}\n\n"
                 self.msg += xx
                 return self.msg
         else:
-            xx = f"[账号]{a}\n[签到]请检查网络或者ck有效性：{self.ck}\n\n"
+            xx = f"[账号]：{a}\n[签到]：请检查网络或者ck有效性：{self.ck}\n\n"
             self.msg += xx
             return self.msg
 
