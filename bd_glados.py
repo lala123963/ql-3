@@ -89,7 +89,7 @@ if __name__ == '__main__':
     token = get_environ("gladosck")
     msg = ''
     cks = token.split("&")
-    print("检测到{}个ck记录\n开始glados签到".format(len(cks)))
+    print("检测到{}个ck记录\n开始glados签到\n".format(len(cks)))
     a = 0
     for ck in cks:
         a += 1
