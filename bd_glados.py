@@ -67,14 +67,17 @@ class Glados():
         if r.status_code == 200:
             if r.json()['message'] == '没有权限':
                 xx = f"[账号]：{a}\n[签到]：{r.json()['message']}，ck可能无效:{self.ck}\n\n"
+                print(xx)
                 self.msg += xx
                 return self.msg
             else:
                 xx = f"[账号]：{a}\n[签到]：{r.json()['message']}\n\n"
+                print(xx)
                 self.msg += xx
                 return self.msg
         else:
             xx = f"[账号]：{a}\n[签到]：请检查网络或者ck有效性：{self.ck}\n\n"
+            print(xx)
             self.msg += xx
             return self.msg
 
@@ -86,7 +89,7 @@ if __name__ == '__main__':
     token = get_environ("gladosck")
     msg = ''
     cks = token.split("&")
-    print("检测到{}个ck记录\n".format(len(cks)))
+    print("检测到{}个ck记录\n开始glados签到".format(len(cks)))
     a = 0
     for ck in cks:
         a += 1
@@ -94,5 +97,4 @@ if __name__ == '__main__':
         msg += run.get_sign_msg()
     if send:
         send("glados签到通知", msg)
-    else:
-        print(f"glados签到通知\n{msg}")
+
