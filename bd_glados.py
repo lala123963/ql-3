@@ -25,10 +25,12 @@ def load_send():
             print("加载通知服务成功！")
         except:
             send = False
-            print("加载通知服务失败~")
+            print(
+                '''加载通知服务失败~\n请使用以下拉库地址\nql repo https://github.com/Bidepanlong/ql.git "bd_" "README" "SendNotify"''')
     else:
         send = False
-        print("加载通知服务失败~")
+        print(
+            '''加载通知服务失败~\n请使用以下拉库地址\nql repo https://github.com/Bidepanlong/ql.git "bd_" "README" "SendNotify"''')
 
 
 load_send()
@@ -82,9 +84,6 @@ class Glados():
 
 if __name__ == '__main__':
     token = get_environ("gladosck")
-    if not token:
-        print("未获取到gladosck环境变量，请检查配置")
-        exit(0)
     msg = ''
     cks = token.split("&")
     print("检测到{}个ck记录\n".format(len(cks)))
